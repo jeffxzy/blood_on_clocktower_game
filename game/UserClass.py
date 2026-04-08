@@ -3,8 +3,8 @@ import os
 
 from nonebot.log import logger
 
-from src.plugins._read import *
-from src.plugins.Alarm import *
+from ._read import *
+from .Alarm import *
 
 class User:
     name = ''
