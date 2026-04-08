@@ -1,8 +1,4 @@
 import random
-import os
-
-from nonebot.log import logger
-from ._read import *
 
 import copy
 

@@ -1,10 +1,5 @@
 import random
-import os
-
-from nonebot.log import logger
-from src.plugins._read import *
-
-from src.plugins.game.identities.outsiders.OutsiderClass import *
+from .OutsiderClass import *
 
 class Moonchild(Outsider):
 

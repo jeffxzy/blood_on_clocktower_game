@@ -1,10 +1,5 @@
 import random
-import os
-
-from nonebot.log import logger
-from src.plugins._read import *
-
-from src.plugins.game.identities.minions.MinionClass import *
+from .MinionClass import *
 
 class Assassin(Minion):
 

@@ -1,10 +1,5 @@
 import random
-import os
-
-from nonebot.log import logger
-from src.plugins._read import *
-
-from src.plugins.game.identities.townsfolks.TownsfolkClass import *
+from .TownsfolkClass import *
 
 class ClockMaker(Townsfolk):
 
