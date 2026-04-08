@@ -23,8 +23,8 @@ class Bartender(Outsider):
                 if right > game.playerNum[0]:
                     right = 1
             if random.randint(0, 1) == 0:
-                game.players[left].drunk.append('bartender')
+                game.players[left].drunk.append(Status.BARTENDER)
                 game.allBoard += str(self.seat) + '号酒保醉了' + str(left) + '号\n'
             else:
-                game.players[right].drunk.append('bartender')
+                game.players[right].drunk.append(Status.BARTENDER)
                 game.allBoard += str(self.seat) + '号酒保醉了' + str(right) + '号\n'

@@ -91,7 +91,7 @@ class FangGu(Demon):
             # 确保poisoned列表存在
             if not hasattr(game.players[r1], 'poisoned'):
                 game.players[r1].poisoned = []
-            game.players[r1].poisoned.append('isNewFangGu')
+            game.players[r1].poisoned.append(Status.IS_NEW_FANGGU)
             game.allBoard += str(self.seat) + '号方古杀死了自己\n' + str(r1) + '号变成了邪恶的方古\n'
             return
         

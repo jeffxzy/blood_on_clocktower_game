@@ -1,7 +1,7 @@
 import random
 import os
 
-from ..IdentityClass import Identity
+from ..IdentityClass import Identity, Status
 
 class Demon(Identity):
     def identityInit(self):

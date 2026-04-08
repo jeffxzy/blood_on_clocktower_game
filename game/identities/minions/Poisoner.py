@@ -23,9 +23,9 @@ class Poisoner(Minion):
                 r1 = random.randint(1, game.playerNum[0])
                 if game.players[r1].good == 1 and game.players[r1].alive == 1:
                     if game.players[r1].hasPretend == 1:
-                        game.players[r1].pretend.poisoned.append('poisoner')
+                        game.players[r1].pretend.poisoned.append(Status.POISONER)
                     else:
-                        game.players[r1].poisoned.append('poisoner')
+                        game.players[r1].poisoned.append(Status.POISONER)
                     game.allBoard += str(self.seat) + '号投毒者毒了' + str(r1) + '\n'
                     return
 
@@ -42,9 +42,9 @@ class Poisoner(Minion):
                 r1 = random.randint(1, game.playerNum[0])
                 if game.players[r1].good == 1 and game.players[r1].alive == 1:
                     if game.players[r1].hasPretend == 1:
-                        game.players[r1].pretend.poisoned.append('poisoner')
+                        game.players[r1].pretend.poisoned.append(Status.POISONER)
                     else:
-                        game.players[r1].poisoned.append('poisoner')
+                        game.players[r1].poisoned.append(Status.POISONER)
                     game.allBoard += str(self.seat) + '号投毒者毒了' + str(r1) + '\n'
                     return
 
@@ -55,7 +55,7 @@ class Poisoner(Minion):
         if self.hasPretend == 1:
             self.pretend.killed(game)
         for i in range(1, game.playerNum[0] + 1):
-            if 'poisoner' in game.players[i].poisoned:
-                game.players[i].poisoned.remove('poisoner')
+            if Status.POISONER in game.players[i].poisoned:
+                game.players[i].poisoned.remove(Status.POISONER)
                 game.allBoard += str(i) + '号因投毒者的中毒消除了\n'
 

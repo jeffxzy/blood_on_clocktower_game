@@ -23,7 +23,7 @@ class Widow(Minion):
 
             # 自毒
             if random.randint(0, 1) == 0:
-                game.players[self.seat].poisoned.append('widow')
+                game.players[self.seat].poisoned.append(Status.WIDOW)
                 game.allBoard += str(self.seat) + '号寡妇毒了自己' + '\n'
 
                 # 自报寡妇
@@ -31,9 +31,9 @@ class Widow(Minion):
                     game.dayBoard[self.seat] += '我得知寡妇。'
             else:
                 if game.players[r1].hasPretend == 1:
-                    game.players[r1].pretend.poisoned.append('widow')
+                    game.players[r1].pretend.poisoned.append(Status.WIDOW)
                 else:
-                    game.players[r1].poisoned.append('widow')
+                    game.players[r1].poisoned.append(Status.WIDOW)
                 game.allBoard += str(self.seat) + '号寡妇毒了' + str(r1) + '\n'
 
                 while cnt < 1000:
@@ -53,7 +53,7 @@ class Widow(Minion):
         if self.hasPretend == 1:
             self.pretend.killed(game)
         for i in range(1, game.playerNum[0] + 1):
-            if 'widow' in game.players[i].poisoned:
-                game.players[i].poisoned.remove('widow')
+            if Status.WIDOW in game.players[i].poisoned:
+                game.players[i].poisoned.remove(Status.WIDOW)
                 game.allBoard += str(i) + '号因寡妇的中毒消除了\n'
 

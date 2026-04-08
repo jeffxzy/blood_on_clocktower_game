@@ -1,5 +1,6 @@
 import random
 from .OutsiderClass import *
+import copy
 
 class Drunk(Outsider):
     def init(self):
@@ -13,6 +14,6 @@ class Drunk(Outsider):
                 self.pretend = copy.deepcopy(game.identityAll['townsfolk'][i])
                 self.pretend.seat = self.seat
                 game.identityAll['townsfolk'][i].used = 1
-                self.pretend.drunk.append('IsDrunk')
+                self.pretend.drunk.append(Status.IS_DRUNK)
                 # logger.info('我是' + str(self.seat) + '，我刚刚虚构了一个身份：' + self.pretend.name + '\n')
                 break

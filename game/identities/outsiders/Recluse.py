@@ -27,8 +27,8 @@ class Recluse(Outsider):
                     self.name = ide.name
                     self.type = ide.type
                     self.good = 0
-                    self.firstPriority = 99
-                    self.priority = 99
+                    self.firstPriority = 79
+                    self.priority = 79
                     game.allBoard += str(self.seat) + '号陌客今晚接下来被视作' + self.name + '\n'
                     return
         if self.back == 1:

@@ -1,6 +1,20 @@
 import random
+from enum import Enum
 
 import copy
+
+class Status(Enum):
+    IS_EVIL = 'isEvil'
+    IS_DRUNK = 'IsDrunk'
+    LEARN_FAILED = 'LearnFailed'
+    PHILOSOPHER = 'philosopher'
+    BLACKSMITH = 'blacksmith'
+    SWEETHEART = 'sweetheart'
+    BARTENDER = 'bartender'
+    WIDOW = 'widow'
+    POISONER = 'poisoner'
+    NO_DASHII = 'NoDashii'
+    IS_NEW_FANGGU = 'isNewFangGu'
 
 class Identity():
 
@@ -56,7 +70,7 @@ class Identity():
                         self.pretend = copy.deepcopy(game.identityAll['outsider'][i])
                         self.pretend.seat = self.seat
                         game.identityAll['outsider'][i].used = 1
-                        self.pretend.poisoned.append('isEvil')
+                        self.pretend.poisoned.append(Status.IS_EVIL)
                     # logger.info('我是' + str(self.seat) + '，我刚刚虚构了一个身份：' + self.pretend.name + '\n')
                         return
                     # 失败了也不再重试
@@ -82,10 +96,10 @@ class Identity():
 
     # 清除过时的怀状态
     def afternoon(self, game):
-        if 'poisoner' in self.poisoned:
-            self.poisoned.remove('poisoner')
-        if self.hasPretend == 1 and 'poisoner' in self.pretend.poisoned:
-            self.pretend.poisoned.remove('poisoner')
+        if Status.POISONER in self.poisoned:
+            self.poisoned.remove(Status.POISONER)
+        if self.hasPretend == 1 and Status.POISONER in self.pretend.poisoned:
+            self.pretend.poisoned.remove(Status.POISONER)
 
     # 第一天的自我介绍
     def introduce(self, game):

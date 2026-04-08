@@ -32,11 +32,11 @@ class Philosopher(Townsfolk):
             game.allBoard += str(self.seat) + '号哲学家学习了' + self.pretend.name + '\n'
 
             if self.healthy == 0:
-                self.pretend.drunk.append('LearnFailed')
+                self.pretend.drunk.append(Status.LEARN_FAILED)
             else:
                 for i in range(1, game.playerNum[0] + 1):
                     if game.players[i].name == self.learnedIdentityName:
-                        game.players[i].drunk.append('philosopher')
+                        game.players[i].drunk.append(Status.PHILOSOPHER)
                         game.allBoard += str(i) + '号因哲学家而醉酒。\n'
         return
 
@@ -56,12 +56,12 @@ class Philosopher(Townsfolk):
         for i in range(1, game.playerNum[0] + 1):
             if game.players[i].name == self.learnedIdentityName:
                 if self.healthy == 0 or self.alive == 0:
-                    if 'philosopher' in game.players[i].drunk:
-                        game.players[i].drunk.remove('philosopher')
+                    if Status.PHILOSOPHER in game.players[i].drunk:
+                        game.players[i].drunk.remove(Status.PHILOSOPHER)
                         game.allBoard += str(i) + '号因哲学家的醉酒消除了。\n'
                 else:
-                    if 'philosopher' not in game.players[i].drunk:
-                        game.players[i].drunk.append('philosopher')
+                    if Status.PHILOSOPHER not in game.players[i].drunk:
+                        game.players[i].drunk.append(Status.PHILOSOPHER)
                         game.allBoard += str(i) + '号因哲学家而醉酒。\n'
         return
 

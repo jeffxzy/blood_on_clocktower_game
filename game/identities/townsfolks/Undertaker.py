@@ -16,7 +16,7 @@ class Undertaker(Townsfolk):
 
             if self.healthy == 0:
                 # 邪恶的伪装：3/4概率给正确信息
-                if 'isEvil' in self.poisoned and random.randint(1, 4) <= 3:
+                if Status.IS_EVIL in self.poisoned and random.randint(1, 4) <= 3:
                     pass
                 else:
                     cnt = 0

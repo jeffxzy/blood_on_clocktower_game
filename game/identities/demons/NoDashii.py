@@ -25,8 +25,8 @@ class NoDashii(Demon):
             right = right + 1
             if right > game.playerNum[0]:
                 right = 1
-        game.players[left].poisoned.append('NoDashii')
-        game.players[right].poisoned.append('NoDashii')
+        game.players[left].poisoned.append(Status.NO_DASHII)
+        game.players[right].poisoned.append(Status.NO_DASHII)
         game.allBoard += str(left) + '号和' + str(right) + '号因诺·达颯中毒\n'
 
 
