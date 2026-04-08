@@ -9,11 +9,11 @@ from nonebot.adapters.onebot.v11.message import MessageSegment
 
 from nonebot.log import logger
 
-from src.plugins._read import *
-from src.plugins.Alarm import *
+from ._read import *
+from .Alarm import *
 
-from src.plugins.game.GameClass import *
-from src.plugins.game.UserClass import *
+from .GameClass import *
+from .UserClass import *
 
 
 async def ProcessGame(bot: Bot, event: Event, game, group_id, user_id, text, message):

@@ -3,9 +3,9 @@ import os
 
 from nonebot.log import logger
 
-from src.plugins._read import *
-from src.plugins.Alarm import *
-from src.plugins.Rand import *
+from ._read import *
+from .Alarm import *
+from .Rand import *
 # from src.plugins.characters.CharacterClass import *
 
 from src.plugins.game.identities.IdentityClass import *
