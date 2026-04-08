@@ -1,7 +1,7 @@
 import random
 from typing import Optional, Callable, Tuple
 
-from src.plugins.game.identities.townsfolks.TownsfolkClass import *
+from .TownsfolkClass import *
 
 
 class Grandmother(Townsfolk):

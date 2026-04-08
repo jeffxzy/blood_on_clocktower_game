@@ -8,8 +8,8 @@ from .Alarm import *
 from .Rand import *
 # from src.plugins.characters.CharacterClass import *
 
-from src.plugins.game.identities.IdentityClass import *
-from src.plugins.game.identities.ImportIdentities import *
+from .identities.IdentityClass import *
+from .identities.ImportIdentities import *
 
 import copy
 
