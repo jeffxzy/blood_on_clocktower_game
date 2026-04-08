@@ -63,7 +63,7 @@ print("=" * 50)
 # 1. 创建游戏实例
 game = Game()
 game.group_id = "test_group_123"
-game.config = 1  # 使用标准1板子（8人局）
+game.config = 2  # 使用利维坦1板子（6人局）
 game.status = "init"
 
 print(f"✓ 游戏创建成功，板子: {game.config}")

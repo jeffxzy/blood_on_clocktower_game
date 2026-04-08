@@ -1,9 +1,12 @@
 import random
 from enum import Enum
+from typing import List, Any, Optional
 
 import copy
 
+
 class Status(Enum):
+    """身份状态枚举"""
     IS_EVIL = 'isEvil'
     IS_DRUNK = 'IsDrunk'
     LEARN_FAILED = 'LearnFailed'
@@ -16,126 +19,189 @@ class Status(Enum):
     NO_DASHII = 'NoDashii'
     IS_NEW_FANGGU = 'isNewFangGu'
 
-class Identity():
 
+class Identity:
+    """
+    身份基类
+    
+    所有游戏角色的基础类，定义了角色的通用属性和方法
+    """
 
     def __init__(self):
         # 名字
-        self.name = ''
+        self.name: str = ''
         # 类别
-        self.type = ''
-        # 存活
-        self.alive = 1
-        # 序号
-        self.seat = 0
-        # 坏状态
-        self.drunk = []
-        self.poisoned = []
-        self.vortex = []
-        # 行动顺次
-        self.firstPriority = 0
-        self.priority = 0
-        # 健康状态
-        self.healthy = 1
-        # 是否为好人
-        self.good = 1
-        # 是否有额外身份
-        self.hasPretend = 0
-        # 额外身份
-        self.pretend = ''
-        # 这个身份是否已经存在场上
-        self.used = 0
+        self.type: str = ''
+        # 存活状态（1=存活，0=死亡）
+        self.alive: int = 1
+        # 座位号
+        self.seat: int = 0
+        # 坏状态列表
+        self.drunk: List[Status] = []
+        self.poisoned: List[Any] = []
+        self.vortex: List[Any] = []
+        # 行动顺序（首夜和普通夜）
+        self.firstPriority: int = 0
+        self.priority: int = 0
+        # 健康状态（1=健康，0=不健康）
+        self.healthy: int = 1
+        # 是否为好人阵营（1=好人，0=坏人）
+        self.good: int = 1
+        # 是否有伪装身份
+        self.hasPretend: int = 0
+        # 伪装身份对象
+        self.pretend: Optional['Identity'] = None
+        # 该身份是否已被使用
+        self.used: int = 0
+        # 改变外来者数量的属性
+        self.changeOutsiders: int = 0
 
-        # 子类1的初始化
+        # 子类1的初始化（设置身份类型）
         self.identityInit()
-        # 子类2的初始化
+        # 子类2的初始化（设置身份具体属性）
         self.init()
-        return
-    
-    # 标准初始化
-    def init(self, game):
+
+    def init(self, game: Any = None) -> None:
+        """
+        标准初始化
+        
+        子类可以覆盖此方法进行额外的初始化
+        """
         pass
-    # 特殊初始化
-    def specInit(self, game):
+
+    def specInit(self, game: Any) -> None:
+        """
+        特殊初始化
+        
+        在游戏开始时调用，用于执行需要游戏上下文的初始化
+        """
         pass
-    # 红进行身份伪装
-    def redPretend(self, game):
+
+    def redPretend(self, game: Any) -> None:
+        """
+        坏人身份伪装
+        
+        让恶魔和爪牙伪装成好人身份
+        """
         if self.type == 'demon' or self.type == 'minion':
             self.good = 0
-            # 小概率伪装成外来者
-            for i in range(0, len(game.identityAll['outsider'])):
-                if game.identityAll['outsider'][i].used == 0 and game.identityAll['outsider'][i].name != '酒鬼':
+            
+            # 小概率伪装成外来者（非酒鬼）
+            for i in range(len(game.identityAll['outsider'])):
+                outsider = game.identityAll['outsider'][i]
+                if outsider.used == 0 and outsider.name != '酒鬼':
                     if random.randint(1, 8) == 1:
-                        self.hasPretend = 1
-                        self.pretend = copy.deepcopy(game.identityAll['outsider'][i])
-                        self.pretend.seat = self.seat
-                        game.identityAll['outsider'][i].used = 1
-                        self.pretend.poisoned.append(Status.IS_EVIL)
-                    # logger.info('我是' + str(self.seat) + '，我刚刚虚构了一个身份：' + self.pretend.name + '\n')
+                        self._set_pretend_identity(outsider, game)
                         return
-                    # 失败了也不再重试
                     break
-            for i in range(0, len(game.identityAll['townsfolk'])):
-                if game.identityAll['townsfolk'][i].used == 0:
-                    self.hasPretend = 1
-                    self.pretend = copy.deepcopy(game.identityAll['townsfolk'][i])
-                    self.pretend.seat = self.seat
-                    game.identityAll['townsfolk'][i].used = 1
-                    self.pretend.poisoned.append('isEvil')
-                    # logger.info('我是' + str(self.seat) + '，我刚刚虚构了一个身份：' + self.pretend.name + '\n')
+            
+            # 伪装成镇民
+            for i in range(len(game.identityAll['townsfolk'])):
+                townsfolk = game.identityAll['townsfolk'][i]
+                if townsfolk.used == 0:
+                    self._set_pretend_identity(townsfolk, game)
                     return
+
+    def _set_pretend_identity(self, identity: 'Identity', game: Any) -> None:
+        """
+        设置伪装身份
         
-    
-    # 检查自己的坏状态
-    def check(self):
-        if self.drunk == [] and self.poisoned == [] and self.vortex == []:
+        Args:
+            identity: 要伪装成的身份
+            game: 游戏对象
+        """
+        self.hasPretend = 1
+        self.pretend = copy.deepcopy(identity)
+        self.pretend.seat = self.seat
+        identity.used = 1
+        self.pretend.poisoned.append(Status.IS_EVIL)
+
+    def check(self) -> None:
+        """
+        检查健康状态
+        
+        根据当前状态更新 healthy 属性
+        """
+        if not self.drunk and not self.poisoned and not self.vortex:
             self.healthy = 1
         else:
             self.healthy = 0
-        return
 
-    # 清除过时的怀状态
-    def afternoon(self, game):
+    def afternoon(self, game: Any) -> None:
+        """
+        下午处理
+        
+        清除过期的状态（如投毒者的毒）
+        """
         if Status.POISONER in self.poisoned:
             self.poisoned.remove(Status.POISONER)
-        if self.hasPretend == 1 and Status.POISONER in self.pretend.poisoned:
+        if self.hasPretend == 1 and self.pretend and Status.POISONER in self.pretend.poisoned:
             self.pretend.poisoned.remove(Status.POISONER)
 
-    # 第一天的自我介绍
-    def introduce(self, game):
-        game.dayBoard[self.seat] = str(self.seat) + '号:'
+    def introduce(self, game: Any) -> None:
+        """
+        自我介绍
+        
+        在首夜向所有人介绍自己的身份
+        """
+        game.dayBoard[self.seat] = f'{self.seat}号:'
+        
+        # 哲学家或者没有伪装的情况显示真实身份
         if self.hasPretend == 0 or self.name == '哲学家':
             game.dayBoard[self.seat] += self.name
             if self.type == 'outsider':
                 game.dayBoard[self.seat] += ' (外来者)'
         else:
-            game.dayBoard[self.seat] += self.pretend.name
-            if self.pretend.type == 'outsider':
-                game.dayBoard[self.seat] += ' (外来者)'
+            # 有伪装的情况显示伪装身份
+            if self.pretend:
+                game.dayBoard[self.seat] += self.pretend.name
+                if self.pretend.type == 'outsider':
+                    game.dayBoard[self.seat] += ' (外来者)'
+        
         game.dayBoard[self.seat] += '  '
-        return
 
-    # 首个夜晚开始前的检查
-    def preFirstNight(self, game):
+    def preFirstNight(self, game: Any) -> None:
+        """
+        首夜开始前的准备
+        
+        在首夜行动前调用
+        """
         self.check()
-        return
-    # 首个夜晚操作
-    def firstNight(self, game):
-        return
-    # 每个夜晚*开始前的检查
-    def preNight(self, game):
+
+    def firstNight(self, game: Any) -> None:
+        """
+        首夜行动
+        
+        子类可以覆盖此方法实现首夜特殊能力
+        """
+        pass
+
+    def preNight(self, game: Any) -> None:
+        """
+        普通夜晚开始前的准备
+        
+        在每个夜晚行动前调用
+        """
         self.check()
-        return
-    # 每个夜晚*操作
-    def night(self, game):
-        return
-    # 死亡时
-    def killed(self, game):
+
+    def night(self, game: Any) -> None:
+        """
+        普通夜晚行动
+        
+        子类可以覆盖此方法实现夜晚特殊能力
+        """
+        pass
+
+    def killed(self, game: Any) -> None:
+        """
+        死亡处理
+        
+        当角色死亡时调用
+        """
         if self.alive == 0:
             return
+        
         self.alive = 0
-        if self.hasPretend == 1:
+        if self.hasPretend == 1 and self.pretend:
             self.pretend.killed(game)
-        else:
-            pass
-        return
+

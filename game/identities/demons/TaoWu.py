@@ -6,6 +6,7 @@ class TaoWu(Demon):
     def init(self):
         self.name = '梼杌'
         self.priority = 25
+        self.changeOutsiders = 1
 
     def night(self, game):
         cnt = 0

@@ -10,6 +10,7 @@ class FangGu(Demon):
         self.priority = 29
         self.used = 0
         self.newSeat = 0
+        self.changeOutsiders = 1
 
     def night(self, game):
         # 检查是否有理发师健康死亡

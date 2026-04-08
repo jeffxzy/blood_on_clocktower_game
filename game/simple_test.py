@@ -78,7 +78,7 @@ print()
 print(">>> 创建游戏实例...")
 game = Game()
 game.group_id = "test_12345"
-game.config = 1  # 使用标准1板子
+game.config = 2  # 使用利维坦1板子
 game.status = "init"
 print("✓ 游戏创建成功")
 print()

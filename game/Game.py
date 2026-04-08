@@ -98,6 +98,9 @@ async def newGame(bot: Bot, event: Event, group_id, user_id, text, message):
                 break
 
     num = getNumber(text, 0)
+    
+    if num == -1:
+        num = 1
 
     game = Game()
     game.group_id = group_id
@@ -107,7 +110,7 @@ async def newGame(bot: Bot, event: Event, group_id, user_id, text, message):
 
     await joinGame(bot, event, group_id, user_id, 'join房主', message)
 
-    message = '创建游戏成功，您已默认加入游戏。现在玩家可以发送指令加入游戏。当前可选板子：0 - ' + str(game.maxConfig)
+    message = f'创建游戏成功，您已默认加入游戏。您选择的板子：{num}。现在玩家可以发送指令加入游戏。当前可选板子：0 - {game.maxConfig}'
     await bot.send_group_msg(group_id=group_id, message=message)
     return
 

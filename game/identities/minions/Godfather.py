@@ -6,6 +6,10 @@ class Godfather(Minion):
     def init(self):
         self.name = '教父'
         self.priority = 38
+        if random.randint(1, 5) == 5:
+            self.changeOutsiders = -1
+        else:
+            self.changeOutsiders = 1
 
     def night(self, game):
         # 查看是否还活着

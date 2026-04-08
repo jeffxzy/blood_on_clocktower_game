@@ -7,16 +7,32 @@ class Blacksmith(Townsfolk):
     def init(self):
         self.name = '铁匠'
         self.firstPriority = 34
+        self.changeOutsiders = 1
 
     def firstNight(self, game):
         if self.alive == 1:
-            outsiderCount = 0
+            realOutsiderCount = 0
             for i in range(1, game.playerNum[0] + 1):
                 if game.players[i].type == 'outsider':
-                    outsiderCount = outsiderCount + 1
-
-            if self.healthy == 0:
-                outsiderCount = random.randint(0, game.playerNum[2] + 2)
+                    realOutsiderCount = realOutsiderCount + 1
+            
+            maxOutsiderCount = game.playerNum[2]
+            
+            if self.healthy == 1:
+                outsiderCount = realOutsiderCount
+            else:
+                outsiderCount = realOutsiderCount
+                if random.random() < 0.8:
+                    if random.random() < 0.5:
+                        if outsiderCount + 1 <= maxOutsiderCount:
+                            outsiderCount = outsiderCount + 1
+                        elif outsiderCount - 1 >= 0:
+                            outsiderCount = outsiderCount - 1
+                    else:
+                        if outsiderCount - 1 >= 0:
+                            outsiderCount = outsiderCount - 1
+                        elif outsiderCount + 1 <= maxOutsiderCount:
+                            outsiderCount = outsiderCount + 1
 
             game.dayBoard[self.seat] += '我得知有' + str(outsiderCount) + '名外来者在场。'
             game.allBoard += str(self.seat) + '号铁匠得知有' + str(outsiderCount) + '名外来者在场。\n'
