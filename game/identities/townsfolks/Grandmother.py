@@ -37,7 +37,7 @@ class Grandmother(Townsfolk):
         return 0
 
     def _is_misinformation_active(self) -> bool:
-        return self.firstNightHealthy == 0 or 'isEvil' in self.poisoned
+        return self.firstNightHealthy == 0 or Status.IS_EVIL in self.poisoned
 
     def _get_real_grandchild(self, game) -> int:
         return self._find_random_player(

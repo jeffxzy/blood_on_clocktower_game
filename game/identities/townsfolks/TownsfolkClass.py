@@ -1,4 +1,4 @@
-from ..IdentityClass import Identity
+from ..IdentityClass import Identity, Status
 
 class Townsfolk(Identity):
 

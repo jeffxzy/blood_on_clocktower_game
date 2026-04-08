@@ -29,13 +29,13 @@ class LionDancer(Townsfolk):
                 evilR = random.randint(1, 3)
 
                 if found == 1:
-                    if self.healthy == 1 or ('isEvil' in self.poisoned and evilR <= 2):
+                    if self.healthy == 1 or (Status.IS_EVIL in self.poisoned and evilR <= 2):
                         game.dayBoard[self.seat] += '得知' + i.name + ' '
                         game.allBoard += str(self.seat) + '号舞狮人得知' + i.name + '\n'
                         self.got.append(i.name)
                         return
                 elif found == 0:
-                    if self.healthy == 0 and (not 'isEvil' in self.poisoned or evilR > 3):
+                    if self.healthy == 0 and (not Status.IS_EVIL in self.poisoned or evilR > 3):
                         game.dayBoard[self.seat] += '得知' + i.name + ' '
                         game.allBoard += str(self.seat) + '号舞狮人得知' + i.name + '\n'
                         self.got.append(i.name)

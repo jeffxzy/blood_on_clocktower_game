@@ -27,8 +27,8 @@ class Spy(Minion):
                         self.name = self.pretend.name
                         self.type = self.pretend.type
                         self.good = 1
-                        self.firstPriority = 99
-                        self.priority = 99
+                        self.firstPriority = 79
+                        self.priority = 79
                         game.allBoard += str(self.seat) + '号间谍今晚接下来被视作' + self.name + '\n'
                         return
         if self.back == 1:

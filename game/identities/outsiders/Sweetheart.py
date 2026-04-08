@@ -17,6 +17,6 @@ class Sweetheart(Outsider):
         while cnt < 1000:
             r = random.randint(1, game.playerNum[0])
             if game.players[r].good == 1 and r != self.seat:
-                game.players[r].drunk.append('sweetheart')
+                game.players[r].drunk.append(Status.SWEETHEART)
                 game.allBoard += str(self.seat) + '号心上人醉了' + str(r) + '号\n'
                 break

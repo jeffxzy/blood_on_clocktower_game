@@ -50,7 +50,7 @@ class FortuneTeller(Townsfolk):
 
             if self.healthy == 0:
                 # 邪恶的伪装：2/3概率给正确信息
-                if 'isEvil' in self.poisoned and random.randint(1, 3) <= 2:
+                if Status.IS_EVIL in self.poisoned and random.randint(1, 3) <= 2:
                     pass
                 else:
 

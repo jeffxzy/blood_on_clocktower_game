@@ -37,16 +37,16 @@ class Blacksmith(Townsfolk):
         for i in range(1, game.playerNum[0] + 1):
             if game.players[i].type == 'outsider':
                 if self.alive == 1 and self.healthy == 1:
-                    if 'blacksmith' not in game.players[i].drunk:
-                        game.players[i].drunk.append('blacksmith')
+                    if Status.BLACKSMITH not in game.players[i].drunk:
+                        game.players[i].drunk.append(Status.BLACKSMITH)
                         if game.players[i].hasPretend == 1:
-                            game.players[i].pretend.drunk.append('blacksmith')
+                            game.players[i].pretend.drunk.append(Status.BLACKSMITH)
                 else:
-                    if 'blacksmith' in game.players[i].drunk:
-                        game.players[i].drunk.remove('blacksmith')
+                    if Status.BLACKSMITH in game.players[i].drunk:
+                        game.players[i].drunk.remove(Status.BLACKSMITH)
                         if game.players[i].hasPretend == 1:
-                            if 'blacksmith' in game.players[i].pretend.drunk:
-                                game.players[i].pretend.drunk.remove('blacksmith')
+                            if Status.BLACKSMITH in game.players[i].pretend.drunk:
+                                game.players[i].pretend.drunk.remove(Status.BLACKSMITH)
         return
 
     def killed(self, game):
@@ -57,11 +57,11 @@ class Blacksmith(Townsfolk):
             self.pretend.killed(game)
         for i in range(1, game.playerNum[0] + 1):
             if game.players[i].type == 'outsider':
-                if 'blacksmith' in game.players[i].drunk:
-                    game.players[i].drunk.remove('blacksmith')
+                if Status.BLACKSMITH in game.players[i].drunk:
+                    game.players[i].drunk.remove(Status.BLACKSMITH)
                     if game.players[i].hasPretend == 1:
-                        if 'blacksmith' in game.players[i].pretend.drunk:
-                            game.players[i].pretend.drunk.remove('blacksmith')
+                        if Status.BLACKSMITH in game.players[i].pretend.drunk:
+                            game.players[i].pretend.drunk.remove(Status.BLACKSMITH)
         game.allBoard += str(self.seat) + '号铁匠死亡，外来者醉酒状态解除。\n'
         return
 
